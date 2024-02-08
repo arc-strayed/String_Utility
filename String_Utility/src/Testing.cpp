@@ -44,10 +44,13 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	mainString.Append("Real");
 
-	std::cout << mainString.CStr() << std::endl;
-
 	if (mainString.EqualTo("RealReal"))
 	{
-		
+		std::cout << "RealReal | " << mainString.CStr() << std::endl;
+		std::cout << "String is not the same!" << std::endl;
+	}
+	else
+	{
+		std::cout << "String is not the same!" << std::endl;
 	}
 }

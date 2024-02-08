@@ -6,19 +6,25 @@
 
 struct String
 {
+	//char stringBuffer[32] = {};
 	char* stringBuffer;
-	int stringSize = 8;
+	int stringSize = 0;
 
-	String()
+	String(const char* rawString)
 	{
-		// Create array on heap
+		stringSize = strlen(rawString) + 1;
+
 		stringBuffer = new char[stringSize];
+
+		strcpy_s(stringBuffer, sizeof(char) * stringSize, rawString);
 	}
 
 	~String()
 	{
-		// Free array
-		delete[] stringBuffer;
+		if (stringBuffer != nullptr)
+		{
+			delete[] stringBuffer;
+		}
 	}
 
 	// Returns the length of the array
@@ -58,22 +64,30 @@ struct String
 	}
 
 	// Adds another string to the end of this string
-	void Append(String& otherString)
+	void Append(const String& otherString)
 	{
-		strcat(stringBuffer, otherString.CStr());
 		stringSize += otherString.stringSize;
+
+		char* newString = new char[stringSize];
+		newString[0] = '\0';
+
+		strcpy_s(newString, sizeof(char) * stringSize, stringBuffer);
+
+		strcat_s(newString, sizeof(char) * stringSize, otherString.CStr());
+
+		stringBuffer = newString;
 	}
 
-	// Adds another string to the start of this string
-	void Prepend(String& otherString)
-	{
-		char* newString;
+	//// Adds another string to the start of this string
+	//void Prepend(String& otherString)
+	//{
+	//	char* newString;
 
-		strcpy(newString, otherString.CStr());
-		strcat(newString, stringBuffer);
+	//	strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
+	//	strcat_s(newString, sizeof(char) * stringSize, stringBuffer);
 
-		strcpy(stringBuffer, newString);
-	}
+	//	strcpy_s(stringBuffer, sizeof(char) * stringSize, newString);
+	//}
 
 	// Returns the const char* array of this string
 	const char* CStr() const
@@ -146,7 +160,8 @@ struct String
 
 	void operator=(const String& rightString)
 	{
-		strcpy(stringBuffer, rightString.CStr());
+		//strcpy_s(stringBuffer, sizeof(char) * stringSize, rightString.CStr());
+		strcpy_s(stringBuffer, sizeof(stringBuffer), rightString.CStr());
 	}
 
 	bool operator<(const String& rightString) const
