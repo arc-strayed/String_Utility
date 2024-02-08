@@ -10,33 +10,47 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	size_t length = mainString.Length();
 
-	std::cout << 4 << " | " << length << std::endl;
-	if (length != 4)
+	if (length == 4)
 	{
-		std::cout << "Length is not correct!" << std::endl;
+		std::cout << "[Length() test] good" << std::endl;
 	}
 	else
 	{
-		std::cout << "Length is correct!" << std::endl;
+		std::cout << "[Length() test] bad" << 4 << "|" << length << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String CharacterAt() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	bool charIsNotTheSame = false;
+
 	for (size_t i = 0; i < mainString.Length(); i++)
 	{
 		if (mainString[i] != testString[i])
 		{
-			std::cout << "Character at index " << i << " is wrong!" << std::endl;
+			charIsNotTheSame = true;
 		}
+	}
+
+	if (!charIsNotTheSame)
+	{
+		std::cout << "[CharacterAt() test] good" << std::endl;
+	}
+	else
+	{
+		std::cout << "[CharacterAt() test] bad" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String EqualTo() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if (mainString.EqualTo("Real"))
+	if (mainString.EqualTo("Real") == true)
 	{
-		std::cout << "Should be true" << std::endl;
+		std::cout << "[EqualTo() test] good" << std::endl;
+	}
+	else
+	{
+		std::cout << "[EqualTo() test] bad" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,13 +58,38 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	mainString.Append("Real");
 
-	if (mainString.EqualTo("RealReal"))
+	if (mainString.EqualTo("RealReal") == true)
 	{
-		std::cout << "RealReal | " << mainString.CStr() << std::endl;
-		std::cout << "String is not the same!" << std::endl;
+		std::cout << "[Append() test] good" << std::endl;
 	}
 	else
 	{
-		std::cout << "String is not the same!" << std::endl;
+		std::cout << "[Append() test] bad (" << mainString.CStr() << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String Prepend() test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	mainString.Prepend("Strong");
+
+	if (mainString.EqualTo("StrongRealReal") == true)
+	{
+		std::cout << "[Prepend() test] good" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Prepend() test] bad (" << mainString.CStr() << ")" << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String CStr() test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	if ((mainString.CStr() == "StrongRealReal") == 0)
+	{
+		std::cout << "[CStr() test] good" << std::endl;
+	}
+	else
+	{
+		std::cout << "[CStr() test] bad (" << mainString.CStr() << ")" << std::endl;
 	}
 }

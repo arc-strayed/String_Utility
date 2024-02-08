@@ -78,16 +78,20 @@ struct String
 		stringBuffer = newString;
 	}
 
-	//// Adds another string to the start of this string
-	//void Prepend(String& otherString)
-	//{
-	//	char* newString;
+	// Adds another string to the start of this string
+	void Prepend(const String& otherString)
+	{
+		stringSize += otherString.stringSize;
 
-	//	strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
-	//	strcat_s(newString, sizeof(char) * stringSize, stringBuffer);
+		char* newString = new char[stringSize];
+		newString[0] = '\0';
 
-	//	strcpy_s(stringBuffer, sizeof(char) * stringSize, newString);
-	//}
+		strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
+
+		strcat_s(newString, sizeof(char) * stringSize, stringBuffer);
+
+		stringBuffer = newString;
+	}
 
 	// Returns the const char* array of this string
 	const char* CStr() const
