@@ -2,9 +2,9 @@
 
 #include <cstring>
 
-struct StrUtil
+struct String
 {
-	const char* strArray;
+	char* strArray;
 
 	int Length()
 	{
@@ -23,11 +23,11 @@ struct StrUtil
 		}
 	}
 
-	bool EqualTo(const char* otherStr)
+	bool EqualTo(String& otherString)
 	{
 		int compareValue = 0;
 
-		compareValue = strcmp(strArray, otherStr);
+		compareValue = strcmp(strArray, otherString.CStr());
 
 		if (compareValue != 0)
 		{
@@ -37,5 +37,25 @@ struct StrUtil
 		{
 			return true;
 		}
+	}
+
+	void Append(String& otherString)
+	{
+		strcat(strArray, otherString.CStr());
+	}
+
+	void Prepend(String& otherString)
+	{
+		char* newString;
+
+		strcpy(newString, otherString.CStr());
+		strcat(newString, strArray);
+
+		strcpy(strArray, newString);
+	}
+
+	const char* CStr()
+	{
+		return strArray;
 	}
 };
