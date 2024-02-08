@@ -134,8 +134,23 @@ struct String
 		std::cout << stringBuffer << std::endl;
 	}
 
-	bool operator==(const String& rightString)
+	bool operator==(const String& rightString) const
 	{
 		return EqualTo(rightString);
+	}
+
+	char operator[](int index) const
+	{
+		return CharacterAt(index);
+	}
+
+	void operator=(const String& rightString)
+	{
+		strcpy(stringBuffer, rightString.CStr());
+	}
+
+	bool operator<(const String& rightString) const
+	{
+		return strcmp(stringBuffer, rightString.CStr());
 	}
 };
