@@ -5,12 +5,25 @@
 
 struct String
 {
-	char* strArray;
+	char* stringBuffer;
+	int stringSize = 8;
+
+	String()
+	{
+		// Create array on heap
+		stringBuffer = new char[stringSize];
+	}
+
+	~String()
+	{
+		// Free array
+		delete[] stringBuffer;
+	}
 
 	// Returns the length of the array
 	size_t Length()
 	{
-		return strlen(strArray);
+		return strlen(stringBuffer);
 	}
 
 	// Returns the character at *index*
@@ -22,7 +35,7 @@ struct String
 		}
 		else
 		{
-			return strArray[index];
+			return stringBuffer[index];
 		}
 	}
 
@@ -31,7 +44,7 @@ struct String
 	{
 		int compareValue = 0;
 
-		compareValue = strcmp(strArray, otherString.CStr());
+		compareValue = strcmp(stringBuffer, otherString.CStr());
 
 		if (compareValue != 0)
 		{
@@ -46,7 +59,8 @@ struct String
 	// Adds another string to the end of this string
 	void Append(String& otherString)
 	{
-		strcat(strArray, otherString.CStr());
+		strcat(stringBuffer, otherString.CStr());
+		stringSize += otherString.stringSize;
 	}
 
 	// Adds another string to the start of this string
@@ -55,15 +69,15 @@ struct String
 		char* newString;
 
 		strcpy(newString, otherString.CStr());
-		strcat(newString, strArray);
+		strcat(newString, stringBuffer);
 
-		strcpy(strArray, newString);
+		strcpy(stringBuffer, newString);
 	}
 
 	// Returns the const char* array of this string
 	const char* CStr()
 	{
-		return strArray;
+		return stringBuffer;
 	}
 
 	// Converts all characters to lowercase
@@ -71,7 +85,7 @@ struct String
 	{
 		for (size_t i = 0; i < Length(); i++)
 		{
-			strArray[i] = std::tolower(strArray[i]);
+			stringBuffer[i] = std::tolower(stringBuffer[i]);
 		}
 	}
 
@@ -80,7 +94,22 @@ struct String
 	{
 		for (size_t i = 0; i < Length(); i++)
 		{
-			strArray[i] = std::toupper(strArray[i]);
+			stringBuffer[i] = std::toupper(stringBuffer[i]);
 		}
 	}
+
+	// Finds the location of stringToFind
+	//int Find(String& stringToFind)
+	//{
+	//	char* subString = strstr(stringBuffer, stringToFind.CStr());
+
+	//	if (subString == nullptr)
+	//	{
+	//		return -1;
+	//	}
+	//	else
+	//	{
+	//		return Length() - stringToFind.Length();
+	//	}
+	//}
 };
