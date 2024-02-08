@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <cctype>
+#include <iostream>
 
 struct String
 {
@@ -21,13 +22,13 @@ struct String
 	}
 
 	// Returns the length of the array
-	size_t Length()
+	size_t Length() const
 	{
 		return strlen(stringBuffer);
 	}
 
 	// Returns the character at *index*
-	char CharacterAt(int index)
+	char CharacterAt(int index) const
 	{
 		if (index < 0 || index > Length())
 		{
@@ -40,7 +41,7 @@ struct String
 	}
 
 	// Compares another string to this string to see if they're similar
-	bool EqualTo(String& otherString)
+	bool EqualTo(const String& otherString) const
 	{
 		int compareValue = 0;
 
@@ -75,7 +76,7 @@ struct String
 	}
 
 	// Returns the const char* array of this string
-	const char* CStr()
+	const char* CStr() const
 	{
 		return stringBuffer;
 	}
@@ -112,4 +113,29 @@ struct String
 	//		return Length() - stringToFind.Length();
 	//	}
 	//}
+
+	//int Find(int startIndex, String& stringToFind)
+	//{
+
+	//}
+
+	//void Replace(String& stringToFind, String& replaceString)
+	//{
+	//	
+	//}
+
+	void ReadFromConsole()
+	{
+		std::cin >> stringBuffer;
+	}
+
+	void WriteToConsole() const
+	{
+		std::cout << stringBuffer << std::endl;
+	}
+
+	bool operator==(const String& rightString)
+	{
+		return EqualTo(rightString);
+	}
 };
