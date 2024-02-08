@@ -1,13 +1,14 @@
 #pragma once
 
 #include <cstring>
+#include <cctype>
 
 struct String
 {
 	char* strArray;
 
 	// Returns the length of the array
-	int Length()
+	size_t Length()
 	{
 		return strlen(strArray);
 	}
@@ -63,5 +64,23 @@ struct String
 	const char* CStr()
 	{
 		return strArray;
+	}
+
+	// Converts all characters to lowercase
+	void ToLower()
+	{
+		for (size_t i = 0; i < Length(); i++)
+		{
+			strArray[i] = std::tolower(strArray[i]);
+		}
+	}
+
+	// Converts all characters to uppercase
+	void ToUpper()
+	{
+		for (size_t i = 0; i < Length(); i++)
+		{
+			strArray[i] = std::toupper(strArray[i]);
+		}
 	}
 };
