@@ -126,25 +126,41 @@ struct String
 		}
 	}
 
-	// Finds the location of stringToFind
-	//int Find(String& stringToFind)
-	//{
-	//	char* subString = strstr(stringBuffer, stringToFind.CStr());
+	// Returns the index of stringToFind
+	int Find(String& stringToFind)
+	{
+		char* subString = strstr(stringBuffer, stringToFind.CStr());
 
-	//	if (subString == nullptr)
-	//	{
-	//		return -1;
-	//	}
-	//	else
-	//	{
-	//		return Length() - stringToFind.Length();
-	//	}
-	//}
+		if (subString == nullptr)
+		{
+			return -1;
+		}
+		else
+		{
+			return subString - stringBuffer; // Pointer arithmatic to find index of subString
+		}
+	}
 
-	//int Find(int startIndex, String& stringToFind)
-	//{
+	// Returns the index of stringToFind starting at startIndex
+	int Find(int startIndex, String& stringToFind)
+	{
+		if (startIndex < 0 || startIndex > Length())
+		{
+			std::cout << "Index is out of range" << std::endl;
+			return -2;
+		}
 
-	//}
+		char* subString = strstr(stringBuffer + startIndex, stringToFind.CStr());
+
+		if (subString == nullptr)
+		{
+			return -1;
+		}
+		else
+		{
+			return subString - stringBuffer;
+		}
+	}
 
 	//void Replace(String& stringToFind, String& replaceString)
 	//{
