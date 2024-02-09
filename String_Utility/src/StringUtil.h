@@ -6,9 +6,13 @@
 
 struct String
 {
-	//char stringBuffer[32] = {};
-	char* stringBuffer;
-	int stringSize = 0;
+	char* stringBuffer = 0;
+	size_t stringSize = 0;
+
+	String()
+	{
+
+	}
 
 	String(const char* rawString)
 	{
@@ -19,12 +23,20 @@ struct String
 		strcpy_s(stringBuffer, sizeof(char) * stringSize, rawString);
 	}
 
+	String(String& otherString)
+	{
+		stringSize = otherString.stringSize;
+
+		char* newString = new char[stringSize];
+
+		strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
+
+		stringBuffer = newString;
+	}
+
 	~String()
 	{
-		if (stringBuffer != nullptr)
-		{
-			delete[] stringBuffer;
-		}
+		delete[] stringBuffer;
 	}
 
 	// Returns the length of the array
@@ -69,11 +81,12 @@ struct String
 		stringSize += otherString.stringSize;
 
 		char* newString = new char[stringSize];
-		newString[0] = '\0';
 
 		strcpy_s(newString, sizeof(char) * stringSize, stringBuffer);
-
 		strcat_s(newString, sizeof(char) * stringSize, otherString.CStr());
+
+		delete[] stringBuffer;
+		stringBuffer = nullptr;
 
 		stringBuffer = newString;
 	}
@@ -84,16 +97,17 @@ struct String
 		stringSize += otherString.stringSize;
 
 		char* newString = new char[stringSize];
-		newString[0] = '\0';
 
 		strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
-
 		strcat_s(newString, sizeof(char) * stringSize, stringBuffer);
+
+		delete[] stringBuffer;
+		stringBuffer = nullptr;
 
 		stringBuffer = newString;
 	}
 
-	// Returns the const char* array of this string
+	// Returns the const char* of this string
 	const char* CStr() const
 	{
 		return stringBuffer;
@@ -144,7 +158,18 @@ struct String
 
 	void ReadFromConsole()
 	{
-		std::cin >> stringBuffer;
+		char inBuffer[512] = {};
+		std::cin >> inBuffer;
+
+		stringSize = strlen(inBuffer) + 1;
+
+		char* newString = new char[stringSize];
+
+		strcpy_s(newString, sizeof(char) * stringSize, inBuffer);
+
+		stringBuffer = newString;
+
+		std::cout << stringBuffer << ", " << stringSize << '\n';
 	}
 
 	void WriteToConsole() const
@@ -162,10 +187,17 @@ struct String
 		return CharacterAt(index);
 	}
 
-	void operator=(const String& rightString)
+	String& operator=(const String& rightString)
 	{
-		//strcpy_s(stringBuffer, sizeof(char) * stringSize, rightString.CStr());
-		strcpy_s(stringBuffer, sizeof(stringBuffer), rightString.CStr());
+		stringSize = rightString.stringSize;
+
+		char* newString = new char[stringSize];
+
+		strcpy_s(newString, sizeof(char) * stringSize, rightString.CStr());
+		
+		stringBuffer = newString;
+
+		return *this;
 	}
 
 	bool operator<(const String& rightString) const
