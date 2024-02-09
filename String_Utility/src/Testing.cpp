@@ -1,5 +1,9 @@
 #include "StringUtil.h"
 
+/*
+ *	String utility testing app
+ */
+
 int main()
 {
 	char testString[5] = "Real";
