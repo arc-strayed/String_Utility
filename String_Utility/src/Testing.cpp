@@ -3,7 +3,7 @@
 int main()
 {
 	char testString[5] = "Real";
-	String mainString = String("Real");
+	String mainString("Real");
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Length() test
@@ -12,11 +12,11 @@ int main()
 
 	if (length == 4)
 	{
-		std::cout << "[Length() test] good" << std::endl;
+		std::cout << "[Length() test] success" << std::endl;
 	}
 	else
 	{
-		std::cout << "[Length() test] bad" << 4 << "|" << length << std::endl;
+		std::cout << "[Length() test] failure" << 4 << "|" << length << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,11 +34,11 @@ int main()
 
 	if (!charIsNotTheSame)
 	{
-		std::cout << "[CharacterAt() test] good" << std::endl;
+		std::cout << "[CharacterAt() test] success" << std::endl;
 	}
 	else
 	{
-		std::cout << "[CharacterAt() test] bad" << std::endl;
+		std::cout << "[CharacterAt() test] failure" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,11 +46,11 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	if (mainString.EqualTo("Real") == true)
 	{
-		std::cout << "[EqualTo() test] good" << std::endl;
+		std::cout << "[EqualTo() test] success" << std::endl;
 	}
 	else
 	{
-		std::cout << "[EqualTo() test] bad" << std::endl;
+		std::cout << "[EqualTo() test] failure" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,11 +60,11 @@ int main()
 
 	if (mainString.EqualTo("RealReal") == true)
 	{
-		std::cout << "[Append() test] good" << std::endl;
+		std::cout << "[Append() test] success" << std::endl;
 	}
 	else
 	{
-		std::cout << "[Append() test] bad (" << mainString.CStr() << std::endl;
+		std::cout << "[Append() test] failure" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,22 +74,86 @@ int main()
 
 	if (mainString.EqualTo("StrongRealReal") == true)
 	{
-		std::cout << "[Prepend() test] good" << std::endl;
+		std::cout << "[Prepend() test] success" << std::endl;
 	}
 	else
 	{
-		std::cout << "[Prepend() test] bad (" << mainString.CStr() << ")" << std::endl;
+		std::cout << "[Prepend() test] failure" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String CStr() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if ((mainString.CStr() == "StrongRealReal") == 0)
+	if ((mainString == mainString.CStr()) == true)
 	{
-		std::cout << "[CStr() test] good" << std::endl;
+		std::cout << "[CStr() test] success" << std::endl;
 	}
 	else
 	{
-		std::cout << "[CStr() test] bad (" << mainString.CStr() << ")" << std::endl;
+		std::cout << "[CStr() test] failure" << std::endl;
 	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String ToLower() test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	mainString.ToLower();
+
+	if ((mainString == "strongrealreal") == true)
+	{
+		std::cout << "[ToLower() test] success" << std::endl;
+	}
+	else
+	{
+		std::cout << "[ToLower() test] failure" << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String ToUpper() test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	mainString.ToUpper();
+
+	if ((mainString == "STRONGREALREAL") == true)
+	{
+		std::cout << "[ToUpper() test] success" << std::endl;
+	}
+	else
+	{
+		std::cout << "[ToUpper() test] failure" << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String Find() test 1
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String Find() test 2
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String Replace() test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String ReadFromConsole() test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String originalString = mainString;
+
+	std::cout << "[Enter a string]: ";
+	mainString.ReadFromConsole();
+
+	if (mainString.EqualTo(originalString) == true)
+	{
+		std::cout << "[ReadFromConsole() test] failure" << std::endl;
+	}
+	else
+	{
+		std::cout << "[ReadFromConsole() test] success" << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String WriteToConsole() test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	mainString.WriteToConsole();
+
+	std::cout << "[WriteToConsole() test] success" << std::endl;
 }

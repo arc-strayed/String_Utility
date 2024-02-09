@@ -168,8 +168,6 @@ struct String
 		strcpy_s(newString, sizeof(char) * stringSize, inBuffer);
 
 		stringBuffer = newString;
-
-		std::cout << stringBuffer << ", " << stringSize << '\n';
 	}
 
 	void WriteToConsole() const
