@@ -128,10 +128,34 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Find() test 1
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String stringToSearch = "Bread";
+	String stringToFind = "ead";
+	
+	if (stringToSearch.Find(stringToFind) == 2)
+	{
+		std::cout << "[Find() test] success" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Find() test] failure" << std::endl;
+		std::cout << stringToSearch.Find(stringToFind) << std::endl;
+	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Find() test 2
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String anotherStringToSearch = "BreadBread";
+	String anotherStringToFind = "ead";
+
+	if (anotherStringToSearch.Find(5, anotherStringToFind) == 7)
+	{
+		std::cout << "[Find() test 2] success" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Find() test 2] failure" << std::endl;
+		std::cout << anotherStringToSearch.Find(anotherStringToFind) << std::endl;
+	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Replace() test
