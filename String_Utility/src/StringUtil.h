@@ -26,12 +26,7 @@ struct String
 	String(String& otherString)
 	{
 		stringSize = otherString.stringSize;
-
-		char* newString = new char[stringSize];
-
-		strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
-
-		stringBuffer = newString;
+		stringBuffer = otherString.stringBuffer;
 	}
 
 	~String()
@@ -188,12 +183,7 @@ struct String
 	String& operator=(const String& rightString)
 	{
 		stringSize = rightString.stringSize;
-
-		char* newString = new char[stringSize];
-
-		strcpy_s(newString, sizeof(char) * stringSize, rightString.CStr());
-		
-		stringBuffer = newString;
+		stringBuffer = rightString.stringBuffer;
 
 		return *this;
 	}
