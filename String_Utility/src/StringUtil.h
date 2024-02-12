@@ -213,6 +213,11 @@ struct String
 	// Check if string is before rightString in the alphabet
 	bool operator<(const String& rightString) const
 	{
-		return strcmp(stringBuffer, rightString.CStr());
+		int compare_result = strcmp(stringBuffer, rightString.CStr());
+
+		if (compare_result == 0 || compare_result < 0)
+			return false;
+		else
+			return true;
 	}
 };
