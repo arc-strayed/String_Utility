@@ -162,11 +162,13 @@ struct String
 		}
 	}
 
+	// Replaces stringToFind with replaceString
 	//void Replace(String& stringToFind, String& replaceString)
 	//{
 	//	
 	//}
 
+	// Read output from console
 	void ReadFromConsole()
 	{
 		char inBuffer[512] = {};
@@ -181,21 +183,25 @@ struct String
 		stringBuffer = newString;
 	}
 
+	// Write from array to console
 	void WriteToConsole() const
 	{
 		std::cout << stringBuffer << std::endl;
 	}
 
+	// Check if strings are the same
 	bool operator==(const String& rightString) const
 	{
 		return EqualTo(rightString);
 	}
 
+	// Get character at index
 	char operator[](int index) const
 	{
 		return CharacterAt(index);
 	}
 
+	// Copy other string to this string
 	String& operator=(const String& rightString)
 	{
 		stringSize = rightString.stringSize;
@@ -204,6 +210,7 @@ struct String
 		return *this;
 	}
 
+	// Check if string is before rightString in the alphabet
 	bool operator<(const String& rightString) const
 	{
 		return strcmp(stringBuffer, rightString.CStr());
