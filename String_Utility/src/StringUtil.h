@@ -32,6 +32,7 @@ struct String
 	~String()
 	{
 		delete[] stringBuffer;
+		stringBuffer = nullptr;
 	}
 
 	// Returns the length of the array
@@ -80,9 +81,6 @@ struct String
 		strcpy_s(newString, sizeof(char) * stringSize, stringBuffer);
 		strcat_s(newString, sizeof(char) * stringSize, otherString.CStr());
 
-		delete[] stringBuffer;
-		stringBuffer = nullptr;
-
 		stringBuffer = newString;
 	}
 
@@ -95,9 +93,6 @@ struct String
 
 		strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
 		strcat_s(newString, sizeof(char) * stringSize, stringBuffer);
-
-		delete[] stringBuffer;
-		stringBuffer = nullptr;
 
 		stringBuffer = newString;
 	}
