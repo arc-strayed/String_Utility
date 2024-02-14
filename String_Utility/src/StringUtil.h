@@ -158,10 +158,39 @@ struct String
 	}
 
 	// Replaces stringToFind with replaceString
-	//void Replace(String& stringToFind, String& replaceString)
-	//{
-	//	
-	//}
+	void Replace(String& stringToFind, String& replaceString)
+	{
+		int foundLocation = Find(stringToFind);
+		char* newString = nullptr;
+
+		while (foundLocation > 0)
+		{
+			stringSize += replaceString.stringSize;
+			
+			delete[] newString;
+			newString = new char[stringSize];
+
+			// Copy until foundLocation in stringBuffer
+			strncpy_s(newString, stringSize * sizeof(char), stringBuffer, foundLocation);
+
+			std::cout << newString << std::endl;
+			
+			// Concatenate replaceString
+			strcat_s(newString, stringSize * sizeof(char), replaceString.CStr());
+
+			std::cout << newString << std::endl;
+
+			// Concatenate the rest of stringBuffer
+			strcat_s(newString, stringSize * sizeof(char), stringBuffer + foundLocation);
+
+			std::cout << newString << std::endl;
+
+			// Check if there is another stringToFind
+			foundLocation = Find(foundLocation + 1, stringToFind);
+		}
+
+		stringBuffer = newString;
+	}
 
 	// Read output from console
 	void ReadFromConsole()
