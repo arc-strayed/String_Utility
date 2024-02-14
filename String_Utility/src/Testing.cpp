@@ -160,6 +160,24 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Replace() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String stringToReplace = "Bread";
+	String stringToFind_2 = "ead";
+	String replacementString = "eed";
+
+	stringToReplace.Replace(stringToFind_2, replacementString);
+
+	if (stringToReplace.EqualTo("Breed") == true)
+	{
+		std::cout << "[Replace() test] success" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Replace() test] failure" << std::endl;
+		std::cout << "Actual Value   : " << stringToReplace.CStr() << std::endl;
+		std::cout << "Reference value: Breed\n";
+	}
+
+	return 0;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ReadFromConsole() test
