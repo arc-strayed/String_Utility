@@ -23,7 +23,7 @@ struct String
 		strcpy_s(stringBuffer, sizeof(char) * stringSize, rawString);
 	}
 
-	String(String& otherString)
+	String(const String& otherString)
 	{
 		stringSize = otherString.stringSize;
 		stringBuffer = otherString.stringBuffer;
@@ -199,8 +199,7 @@ struct String
 	// Copy other string to this string
 	String& operator=(const String& rightString)
 	{
-		stringSize = rightString.stringSize;
-		stringBuffer = rightString.stringBuffer;
+		String newString = String(rightString);
 
 		return *this;
 	}
