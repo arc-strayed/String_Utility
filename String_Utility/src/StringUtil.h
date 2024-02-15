@@ -76,12 +76,16 @@ struct String
 	{
 		stringSize += otherString.stringSize;
 
+		// Construct new string
 		char* newString = new char[stringSize];
+		strcpy_s(newString, stringSize, stringBuffer);
+		strcat_s(newString, stringSize, otherString.CStr());
 
-		strcpy_s(newString, sizeof(char) * stringSize, stringBuffer);
-		strcat_s(newString, sizeof(char) * stringSize, otherString.CStr());
-
+		// Swap pointer
+		delete[] stringBuffer;
 		stringBuffer = newString;
+
+		newString = nullptr;
 	}
 
 	// Adds another string to the start of this string
@@ -89,12 +93,16 @@ struct String
 	{
 		stringSize += otherString.stringSize;
 
+		// Construct new string
 		char* newString = new char[stringSize];
+		strcpy_s(newString, stringSize, otherString.CStr());
+		strcat_s(newString, stringSize, stringBuffer);
 
-		strcpy_s(newString, sizeof(char) * stringSize, otherString.CStr());
-		strcat_s(newString, sizeof(char) * stringSize, stringBuffer);
-
+		// Swap pointer
+		delete[] stringBuffer;
 		stringBuffer = newString;
+
+		newString = nullptr;
 	}
 
 	// Returns the const char* of this string
@@ -195,16 +203,20 @@ struct String
 	// Read output from console
 	void ReadFromConsole()
 	{
-		char inBuffer[512] = {};
+		char inBuffer = '\0';
 		std::cin >> inBuffer;
 
-		stringSize = strlen(inBuffer) + 1;
+		stringSize = strlen(&inBuffer) + 1;
 
+		// Construct new string
 		char* newString = new char[stringSize];
+		strcpy_s(newString, sizeof(char) * stringSize, &inBuffer);
 
-		strcpy_s(newString, sizeof(char) * stringSize, inBuffer);
-
+		// Swap pointer
+		delete[] stringBuffer;
 		stringBuffer = newString;
+
+		newString = nullptr;
 	}
 
 	// Write from array to console
