@@ -123,7 +123,7 @@ struct String
 	}
 
 	// Returns the index of stringToFind
-	int Find(String& stringToFind)
+	int Find(const String& stringToFind)
 	{
 		char* subString = strstr(stringBuffer, stringToFind.CStr());
 
@@ -138,7 +138,7 @@ struct String
 	}
 
 	// Returns the index of stringToFind starting at startIndex
-	int Find(int startIndex, String& stringToFind)
+	int Find(int startIndex, const String& stringToFind)
 	{
 		if (startIndex < 0 || startIndex > Length())
 		{
@@ -158,39 +158,53 @@ struct String
 		}
 	}
 
-	// Replaces stringToFind with replaceString
-	void Replace(String& stringToFind, String& replaceString)
+	// Replaces every instance of stringToFind with replaceString
+	void Replace(const String& stringToFind, const String& replaceString)
 	{
-		int foundLocation = Find(stringToFind);
-		char* newString = nullptr;
+		char* storageString = new char[stringSize];
+		std::memcpy(storageString, stringBuffer, stringSize);
 
+		int foundLocation = Find(stringToFind);
+		int tempStringSize = stringSize;
+
+		// Loop through string
 		while (foundLocation > 0)
 		{
-			stringSize += replaceString.stringSize;
+			tempStringSize += replaceString.stringSize + 1;
+
+			char* newString = new char[tempStringSize];
+
+			// Copy until foundLocation
+			strncpy_s(newString, tempStringSize, storageString, foundLocation);
+			//std::cout << newString << std::endl;
 			
-			delete[] newString;
-			newString = new char[stringSize];
+			// Concatenate replacement string
+			strcat_s(newString, tempStringSize, replaceString.stringBuffer);
+			//std::cout << newString << std::endl;
 
-			// Copy until foundLocation in stringBuffer
-			strncpy_s(newString, stringSize * sizeof(char), stringBuffer, foundLocation);
+			// Concatenate rest of storageString with offset
+			int offset = foundLocation - 1 + stringToFind.stringSize;
+			strcat_s(newString, tempStringSize, storageString + offset);
+			//std::cout << newString << std::endl;
 
-			std::cout << newString << std::endl;
-			
-			// Concatenate replaceString
-			strcat_s(newString, stringSize * sizeof(char), replaceString.CStr());
+			storageString = newString;
+			newString = nullptr;
 
-			std::cout << newString << std::endl;
+			// Find next instance with offset of stringToFind's size
+			char* subString = strstr(storageString + foundLocation + stringToFind.stringSize, stringToFind.CStr());
 
-			// Concatenate the rest of stringBuffer
-			strcat_s(newString, stringSize * sizeof(char), stringBuffer + foundLocation);
-
-			std::cout << newString << std::endl;
-
-			// Check if there is another stringToFind
-			foundLocation = Find(foundLocation + 1, stringToFind);
+			if (subString == nullptr)
+			{
+				foundLocation = -1;
+			}
+			else
+			{
+				foundLocation = subString - storageString; // Pointer arithmatic to find index of subString
+			}
 		}
 
-		stringBuffer = newString;
+		stringBuffer = storageString;
+		storageString = nullptr;
 	}
 
 	// Read output from console
