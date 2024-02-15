@@ -166,24 +166,17 @@ struct String
 
 		int foundLocation = Find(stringToFind);
 
-		// Loop through string
 		while (foundLocation > 0)
 		{
-			stringSize += replaceString.stringSize + 1;
-
+			stringSize += replaceString.stringSize;
 			char* newString = new char[stringSize];
 
-			// Copy until foundLocation
 			strncpy_s(newString, stringSize, storageString, foundLocation);
-			
-			// Concatenate replacement string
 			strcat_s(newString, stringSize, replaceString.stringBuffer);
 
-			// Concatenate rest of storageString with offset
 			int offset = foundLocation - 1 + stringToFind.stringSize;
 			strcat_s(newString, stringSize, storageString + offset);
 
-			// Store string
 			delete[] storageString;
 			storageString = new char[stringSize];
 			std::memcpy(storageString, newString, stringSize);
@@ -193,11 +186,10 @@ struct String
 
 			// Find next instance with offset of stringToFind's size
 			char* subString = strstr(storageString + foundLocation + stringToFind.stringSize, stringToFind.CStr());
-
 			if (subString == nullptr)
 				foundLocation = -1;
 			else
-				foundLocation = subString - storageString; // Pointer arithmatic to find index of subString
+				foundLocation = subString - storageString;
 		}
 
 		delete[] stringBuffer;
