@@ -165,45 +165,46 @@ struct String
 		std::memcpy(storageString, stringBuffer, stringSize);
 
 		int foundLocation = Find(stringToFind);
-		int tempStringSize = stringSize;
 
 		// Loop through string
 		while (foundLocation > 0)
 		{
-			tempStringSize += replaceString.stringSize + 1;
+			stringSize += replaceString.stringSize + 1;
 
-			char* newString = new char[tempStringSize];
+			char* newString = new char[stringSize];
 
 			// Copy until foundLocation
-			strncpy_s(newString, tempStringSize, storageString, foundLocation);
-			//std::cout << newString << std::endl;
+			strncpy_s(newString, stringSize, storageString, foundLocation);
 			
 			// Concatenate replacement string
-			strcat_s(newString, tempStringSize, replaceString.stringBuffer);
-			//std::cout << newString << std::endl;
+			strcat_s(newString, stringSize, replaceString.stringBuffer);
 
 			// Concatenate rest of storageString with offset
 			int offset = foundLocation - 1 + stringToFind.stringSize;
-			strcat_s(newString, tempStringSize, storageString + offset);
-			//std::cout << newString << std::endl;
+			strcat_s(newString, stringSize, storageString + offset);
 
-			storageString = newString;
+			// Store string
+			delete[] storageString;
+			storageString = new char[stringSize];
+			std::memcpy(storageString, newString, stringSize);
+
+			delete[] newString;
 			newString = nullptr;
 
 			// Find next instance with offset of stringToFind's size
 			char* subString = strstr(storageString + foundLocation + stringToFind.stringSize, stringToFind.CStr());
 
 			if (subString == nullptr)
-			{
 				foundLocation = -1;
-			}
 			else
-			{
 				foundLocation = subString - storageString; // Pointer arithmatic to find index of subString
-			}
 		}
 
-		stringBuffer = storageString;
+		delete[] stringBuffer;
+		stringBuffer = new char[stringSize];
+		std::memcpy(stringBuffer, storageString, stringSize);
+
+		delete[] storageString;
 		storageString = nullptr;
 	}
 
