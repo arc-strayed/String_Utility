@@ -6,7 +6,7 @@
 
 struct String
 {
-	char* stringBuffer = 0;
+	char* stringBuffer = nullptr;
 	size_t stringSize = 0;
 
 	String()
@@ -25,8 +25,13 @@ struct String
 
 	String(const String& otherString)
 	{
+		if (stringBuffer != nullptr) delete[] stringBuffer;
+
 		stringSize = otherString.stringSize;
-		stringBuffer = otherString.stringBuffer;
+
+		// Copy other string buffer to this string buffer
+		stringBuffer = new char[stringSize];
+		std::memcpy(stringBuffer, otherString.stringBuffer, stringSize);
 	}
 
 	~String()
@@ -240,7 +245,15 @@ struct String
 	// Copy other string to this string
 	String& operator=(const String& rightString)
 	{
-		String newString = String(rightString);
+		// Safe guards
+		if (stringBuffer != nullptr) delete[] stringBuffer;
+		if (this == &rightString) return *this;
+
+		stringSize = rightString.stringSize;
+
+		// Copy other string buffer to this string buffer
+		stringBuffer = new char[stringSize];
+		std::memcpy(stringBuffer, rightString.stringBuffer, stringSize);
 
 		return *this;
 	}
