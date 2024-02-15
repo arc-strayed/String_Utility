@@ -19,8 +19,7 @@ struct String
 		stringSize = strlen(rawString) + 1;
 
 		stringBuffer = new char[stringSize];
-
-		strcpy_s(stringBuffer, sizeof(char) * stringSize, rawString);
+		std::memcpy(stringBuffer, rawString, stringSize);
 	}
 
 	String(const String& otherString)
@@ -79,18 +78,14 @@ struct String
 	// Adds another string to the end of this string
 	void Append(const String& otherString)
 	{
+		if (stringBuffer != nullptr) delete[] stringBuffer;
+
 		stringSize += otherString.stringSize;
 
 		// Construct new string
-		char* newString = new char[stringSize];
-		strcpy_s(newString, stringSize, stringBuffer);
-		strcat_s(newString, stringSize, otherString.CStr());
-
-		// Swap pointer
-		delete[] stringBuffer;
-		stringBuffer = newString;
-
-		newString = nullptr;
+		stringBuffer = new char[stringSize];
+		std::memcpy(stringBuffer, otherString.stringBuffer, stringSize);
+		strcat_s(stringBuffer, stringSize, otherString.CStr());
 	}
 
 	// Adds another string to the start of this string
@@ -100,11 +95,11 @@ struct String
 
 		// Construct new string
 		char* newString = new char[stringSize];
-		strcpy_s(newString, stringSize, otherString.CStr());
+		std::memcpy(newString, otherString.stringBuffer, stringSize);
 		strcat_s(newString, stringSize, stringBuffer);
 
 		// Swap pointer
-		delete[] stringBuffer;
+		if (stringBuffer != nullptr) delete[] stringBuffer;
 		stringBuffer = newString;
 
 		newString = nullptr;
@@ -208,20 +203,16 @@ struct String
 	// Read output from console
 	void ReadFromConsole()
 	{
-		char inBuffer = '\0';
-		std::cin >> inBuffer;
+		if (stringBuffer != nullptr) delete[] stringBuffer;
 
-		stringSize = strlen(&inBuffer) + 1;
+		char inputBuffer[512] = {};
+		std::cin >> inputBuffer;
+
+		stringSize = strlen(inputBuffer) + 1;
 
 		// Construct new string
-		char* newString = new char[stringSize];
-		strcpy_s(newString, sizeof(char) * stringSize, &inBuffer);
-
-		// Swap pointer
-		delete[] stringBuffer;
-		stringBuffer = newString;
-
-		newString = nullptr;
+		stringBuffer = new char[stringSize];
+		std::memcpy(stringBuffer, inputBuffer, stringSize);
 	}
 
 	// Write from array to console
