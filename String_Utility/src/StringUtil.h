@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+	A header only string utility file that will make working with character arrays easier to manage.
+*/
+
 #include <cstring>
 #include <cctype>
 #include <iostream>
