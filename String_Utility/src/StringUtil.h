@@ -65,7 +65,7 @@ struct String
 	// Compares another string to this string to see if they're similar
 	bool EqualTo(const String& otherString) const
 	{
-		return (strcmp(stringBuffer, otherString.CStr()) == 0);
+		return (strcmp(stringBuffer, otherString.stringBuffer) == 0);
 	}
 
 	// Adds another string to the end of this string
@@ -78,7 +78,7 @@ struct String
 		// Construct new string
 		stringBuffer = new char[stringSize];
 		std::memcpy(stringBuffer, otherString.stringBuffer, stringSize);
-		strcat_s(stringBuffer, stringSize, otherString.CStr());
+		strcat_s(stringBuffer, stringSize, otherString.stringBuffer);
 	}
 
 	// Adds another string to the start of this string
@@ -209,9 +209,16 @@ struct String
 	}
 
 	// Write from array to console
-	void WriteToConsole() const
+	int WriteToConsole() const
 	{
-		std::cout << stringBuffer << std::endl;
+		if (std::cout << stringBuffer << std::endl)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 	// Check if strings are the same
@@ -245,7 +252,7 @@ struct String
 	// Check if string is before rightString in the alphabet
 	bool operator<(const String& rightString) const
 	{
-		int compare_result = strcmp(stringBuffer, rightString.CStr());
+		int compare_result = strcmp(stringBuffer, rightString.stringBuffer);
 
 		if (compare_result == 0 || compare_result < 0)
 			return false;
