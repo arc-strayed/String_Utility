@@ -65,18 +65,7 @@ struct String
 	// Compares another string to this string to see if they're similar
 	bool EqualTo(const String& otherString) const
 	{
-		int compareValue = 0;
-
-		compareValue = strcmp(stringBuffer, otherString.CStr());
-
-		if (compareValue != 0)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return (strcmp(stringBuffer, otherString.CStr()) == 0);
 	}
 
 	// Adds another string to the end of this string
