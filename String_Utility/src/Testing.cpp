@@ -28,8 +28,6 @@ int main()
 	// String CharacterAt() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	char compare_char = mainString->CharacterAt(0);
-	// String& mainString_reference = *mainString;
-	//char compare_char = mainString_reference[0];
 
 	if ((compare_char == 'R') == true)
 	{
@@ -180,22 +178,20 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Replace() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//String stringToReplace = "Bread";
-	//String stringToFind_2 = "ead";
-	//String replacementString = "eed";
+	String* stringToReplace = new String("Bad Rad Sad");
 
-	//stringToReplace.Replace(stringToFind_2, replacementString);
+	stringToReplace->Replace("ad", "aaad");
 
-	//if (stringToReplace.EqualTo("Breed") == true)
-	//{
-	//	std::cout << "[Replace() test] P" << std::endl;
-	//}
-	//else
-	//{
-	//	std::cout << "[Replace() test] X" << std::endl;
-	//	std::cout << "Actual Value   : " << stringToReplace.CStr() << std::endl;
-	//	std::cout << "Reference value: Breed\n";
-	//}
+	if (stringToReplace->EqualTo("Baaad Raaad Saaad") == true)
+	{
+		std::cout << "[Replace() test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Replace() test] X" << std::endl;
+		std::cout << "Actual Value   : " << stringToReplace->CStr() << std::endl;
+		std::cout << "Reference value: Baaad Raaad Saaad\n";
+	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ReadFromConsole() test
@@ -232,6 +228,7 @@ int main()
 	delete anotherStringToSearch;
 	delete anotherStringToFind;
 	delete originalString;
+	delete stringToReplace;
 
 	mainString = nullptr;
 	stringToSearch = nullptr;
@@ -239,6 +236,7 @@ int main()
 	anotherStringToSearch = nullptr;
 	anotherStringToFind = nullptr;
 	originalString = nullptr;
+	stringToReplace = nullptr;
 
 	return 0;
 }
