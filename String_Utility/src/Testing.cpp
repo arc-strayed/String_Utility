@@ -6,158 +6,237 @@
 
 int main()
 {
-	char testString[5] = "Real";
-	String mainString("Real");
+	std::cout << "~~~~~~~~~~ P = pass, X = failure ~~~~~~~~~~\n";
+
+	String* mainString = new String("Real");
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Length() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	size_t length = mainString.Length();
+	size_t length = mainString->Length();
 
 	if (length == 4)
 	{
-		std::cout << "[Length() test] success" << std::endl;
+		std::cout << "[Length() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[Length() test] failure" << 4 << "|" << length << std::endl;
+		std::cout << "[Length() test] X" << 4 << "|" << length << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String CharacterAt() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	bool charIsNotTheSame = false;
+	char compare_char = mainString->CharacterAt(0);
 
-	for (size_t i = 0; i < mainString.Length(); i++)
+	if ((compare_char == 'R') == true)
 	{
-		if (mainString[i] != testString[i])
-		{
-			charIsNotTheSame = true;
-		}
-	}
-
-	if (!charIsNotTheSame)
-	{
-		std::cout << "[CharacterAt() test] success" << std::endl;
+		std::cout << "[CharacterAt() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[CharacterAt() test] failure" << std::endl;
+		std::cout << "[CharacterAt() test] X" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String EqualTo() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if (mainString.EqualTo("Real") == true)
+	if (mainString->EqualTo("Real") == true)
 	{
-		std::cout << "[EqualTo() test] success" << std::endl;
+		std::cout << "[EqualTo() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[EqualTo() test] failure" << std::endl;
+		std::cout << "[EqualTo() test] X" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Append() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString.Append("Real");
+	mainString->Append("Real");
 
-	if (mainString.EqualTo("RealReal") == true)
+	if (mainString->EqualTo("RealReal"))
 	{
-		std::cout << "[Append() test] success" << std::endl;
+		std::cout << "[Append() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[Append() test] failure" << std::endl;
+		std::cout << "[Append() test] X" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Prepend() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString.Prepend("Strong");
+	mainString->Prepend("Strong");
 
-	if (mainString.EqualTo("StrongRealReal") == true)
+	if (mainString->EqualTo("StrongRealReal"))
 	{
-		std::cout << "[Prepend() test] success" << std::endl;
+		std::cout << "[Prepend() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[Prepend() test] failure" << std::endl;
+		std::cout << "[Prepend() test] X" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String CStr() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if ((mainString == mainString.CStr()) == true)
+	if (std::cout << mainString->CStr() << std::endl)
 	{
-		std::cout << "[CStr() test] success" << std::endl;
+		std::cout << "[CStr() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[CStr() test] failure" << std::endl;
+		std::cout << "[CStr() test] X" << std::endl;
 	}
-
+	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ToLower() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString.ToLower();
+	mainString->ToLower();
 
-	if ((mainString == "strongrealreal") == true)
+	bool isStringLower = true;
+	String& mainString_ref = *mainString;
+	
+	// Check if every character is lowercase
+	for (size_t i = 0; i < mainString->Length(); i++)
 	{
-		std::cout << "[ToLower() test] success" << std::endl;
+		if (std::islower(mainString_ref[i]) == 0)
+		{
+			isStringLower = false;
+			break;
+		}
+	}
+
+	if (isStringLower)
+	{
+		std::cout << "[ToLower() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[ToLower() test] failure" << std::endl;
+		std::cout << "[ToLower() test] X" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ToUpper() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString.ToUpper();
+	mainString->ToUpper();
 
-	if ((mainString == "STRONGREALREAL") == true)
+	bool isStringUpper = true;
+
+	// Check if every character is uppercase
+	for (size_t i = 0; i < mainString->Length(); i++)
 	{
-		std::cout << "[ToUpper() test] success" << std::endl;
+		if (std::isupper(mainString_ref[i]) == 0)
+		{
+			isStringUpper = false;
+			break;
+		}
+	}
+
+	if (isStringUpper)
+	{
+		std::cout << "[ToUpper() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[ToUpper() test] failure" << std::endl;
+		std::cout << "[ToUpper() test] X" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Find() test 1
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String* stringToSearch = new String("Bread");
+	String* stringToFind = new String("ead");
+
+	if (stringToSearch->Find(*stringToFind) == 2)
+	{
+		std::cout << "[Find() test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Find() test] X" << std::endl;
+		std::cout << stringToSearch->Find(*stringToFind) << std::endl;
+	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Find() test 2
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String* anotherStringToSearch = new String("BreadBread");
+	String* anotherStringToFind = new String("ead");
+
+	if (anotherStringToSearch->Find(5, *anotherStringToFind) == 7)
+	{
+		std::cout << "[Find() test 2] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Find() test 2] X" << std::endl;
+		std::cout << anotherStringToSearch->Find(5, *anotherStringToFind) << std::endl;
+	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Replace() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String* stringToReplace = new String("Bad Rad Sad");
+
+	stringToReplace->Replace("ad", "aaad");
+
+	if (stringToReplace->EqualTo("Baaad Raaad Saaad") == true)
+	{
+		std::cout << "[Replace() test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Replace() test] X" << std::endl;
+		std::cout << "Actual Value   : " << stringToReplace->CStr() << std::endl;
+		std::cout << "Reference value: Baaad Raaad Saaad\n";
+	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ReadFromConsole() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	String originalString = mainString;
+	String* originalString = new String(*mainString);
 
 	std::cout << "[Enter a string]: ";
-	mainString.ReadFromConsole();
+	mainString->ReadFromConsole();
 
-	if (mainString.EqualTo(originalString) == true)
+	if (mainString->EqualTo(*originalString) == false)
 	{
-		std::cout << "[ReadFromConsole() test] failure" << std::endl;
+		std::cout << "[ReadFromConsole() test] P" << std::endl;
 	}
 	else
 	{
-		std::cout << "[ReadFromConsole() test] success" << std::endl;
+		std::cout << "[ReadFromConsole() test] X" << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String WriteToConsole() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString.WriteToConsole();
+	if (mainString->WriteToConsole())
+	{
+		std::cout << "[WriteToConsole() test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[WriteToConsole() test] X" << std::endl;
+	}
 
-	std::cout << "[WriteToConsole() test] success" << std::endl;
+	delete mainString;
+	delete stringToSearch;
+	delete stringToFind;
+	delete anotherStringToSearch;
+	delete anotherStringToFind;
+	delete originalString;
+	delete stringToReplace;
+
+	mainString = nullptr;
+	stringToSearch = nullptr;
+	stringToFind = nullptr;
+	anotherStringToSearch = nullptr;
+	anotherStringToFind = nullptr;
+	originalString = nullptr;
+	stringToReplace = nullptr;
+
+	return 0;
 }
