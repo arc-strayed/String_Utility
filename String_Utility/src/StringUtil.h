@@ -8,16 +8,9 @@
 #include <cctype>
 #include <iostream>
 
-struct String
+class String
 {
-	char* stringBuffer = nullptr;
-	size_t stringSize = 0;
-
-	String()
-	{
-
-	}
-
+public:
 	String(const char* rawString)
 	{
 		stringSize = strlen(rawString) + 1;
@@ -266,4 +259,8 @@ struct String
 		else
 			return true;
 	}
+
+private:
+	char* stringBuffer = nullptr;
+	size_t stringSize = 0;
 };
