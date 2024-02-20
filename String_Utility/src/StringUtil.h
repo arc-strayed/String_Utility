@@ -159,17 +159,21 @@ public:
 
 		int foundLocation = Find(stringToFind);
 
+		// Loop while there is still a stringToFind
 		while (foundLocation > 0)
 		{
 			stringSize += replaceString.stringSize;
 			char* newString = new char[stringSize];
 
+			// Copy storageString until found location and then concatenate replaceString
 			strncpy_s(newString, stringSize, storageString, foundLocation);
 			strcat_s(newString, stringSize, replaceString.stringBuffer);
 
+			// Concatenate the rest of storageString after stringToFind
 			int offset = foundLocation - 1 + stringToFind.stringSize;
 			strcat_s(newString, stringSize, storageString + offset);
 
+			// Store newString in storageString
 			delete[] storageString;
 			storageString = new char[stringSize];
 			std::memcpy(storageString, newString, stringSize);
