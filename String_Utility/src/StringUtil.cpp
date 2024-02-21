@@ -1,10 +1,14 @@
 #include "StringUtil.h"
 
+/*
+* Definition file for StringUtil.h
+*/
 
 #include <cstring>
 #include <cctype>
 #include <iostream>
 
+// Raw character array constructor
 String::String(const char* rawString)
 {
 	stringSize = strlen(rawString) + 1;
@@ -13,6 +17,7 @@ String::String(const char* rawString)
 	std::memcpy(stringBuffer, rawString, stringSize);
 }
 
+// Copy constructor
 String::String(const String& otherString)
 {
 	if (stringBuffer != nullptr) delete[] stringBuffer;
@@ -24,17 +29,20 @@ String::String(const String& otherString)
 	std::memcpy(stringBuffer, otherString.stringBuffer, stringSize);
 }
 
+// Deconstructor
 String::~String()
 {
 	delete[] stringBuffer;
 	stringBuffer = nullptr;
 }
 
+// Returns the length of the string
 size_t String::Length() const
 {
 	return strlen(stringBuffer);
 }
 
+// Returns the character at *index*
 char String::CharacterAt(int index) const
 {
 	if (index < 0 || index > Length())
@@ -47,11 +55,13 @@ char String::CharacterAt(int index) const
 	}
 }
 
+// Compares two strings to see if they're similar
 bool String::EqualTo(const String& otherString) const
 {
 	return (strcmp(stringBuffer, otherString.stringBuffer) == 0);
 }
 
+// Adds another string to the end of this string
 void String::Append(const String& otherString)
 {
 	if (stringBuffer != nullptr) delete[] stringBuffer;
@@ -64,6 +74,7 @@ void String::Append(const String& otherString)
 	strcat_s(stringBuffer, stringSize, otherString.stringBuffer);
 }
 
+// Adds another string to the start of this string
 void String::Prepend(const String& otherString)
 {
 	stringSize += otherString.stringSize;
@@ -80,11 +91,13 @@ void String::Prepend(const String& otherString)
 	newString = nullptr;
 }
 
+// Returns the character array of this string
 const char* String::CStr() const
 {
 	return stringBuffer;
 }
 
+// Converts all characters to lowercase
 void String::ToLower()
 {
 	for (size_t i = 0; i < Length(); i++)
@@ -93,6 +106,7 @@ void String::ToLower()
 	}
 }
 
+// Converts all characters to uppercase
 void String::ToUpper()
 {
 	for (size_t i = 0; i < Length(); i++)
@@ -101,6 +115,7 @@ void String::ToUpper()
 	}
 }
 
+// Returns the index of *stringToFind*
 int String::Find(const String& stringToFind)
 {
 	char* subString = strstr(stringBuffer, stringToFind.CStr());
@@ -115,6 +130,7 @@ int String::Find(const String& stringToFind)
 	}
 }
 
+// Returns the index of *stringToFind* starting at *startIndex*
 int String::Find(int startIndex, const String& stringToFind)
 {
 	if (startIndex < 0 || startIndex > Length())
@@ -135,6 +151,7 @@ int String::Find(int startIndex, const String& stringToFind)
 	}
 }
 
+// Replaces every instance of *stringToFind* with *replaceString*
 void String::Replace(const String& stringToFind, const String& replaceString)
 {
 	char* storageString = new char[stringSize];
@@ -180,6 +197,7 @@ void String::Replace(const String& stringToFind, const String& replaceString)
 	storageString = nullptr;
 }
 
+// Read input from console
 void String::ReadFromConsole()
 {
 	if (stringBuffer != nullptr) delete[] stringBuffer;
@@ -194,6 +212,7 @@ void String::ReadFromConsole()
 	std::memcpy(stringBuffer, inputBuffer, stringSize);
 }
 
+// Write from array to console
 int String::WriteToConsole() const
 {
 	if (std::cout << stringBuffer << std::endl)
@@ -206,16 +225,19 @@ int String::WriteToConsole() const
 	}
 }
 
+// Checks if two strings are the same
 bool String::operator == (const String& rightString) const
 {
 	return EqualTo(rightString);
 }
 
+// Get character at *index*
 char String::operator [] (int index) const
 {
 	return CharacterAt(index);
 }
 
+// Copy other string to this string
 String& String::operator = (const String& rightString)
 {
 	// Safe guards
@@ -231,6 +253,7 @@ String& String::operator = (const String& rightString)
 	return *this;
 }
 
+// Check if string is before *rightString* in the alphabet
 bool String::operator < (const String& rightString) const
 {
 	int compare_result = strcmp(stringBuffer, rightString.stringBuffer);
