@@ -9,12 +9,12 @@ int main()
 {
 	std::cout << "~~~~~~~~~~ P = pass, X = failure ~~~~~~~~~~\n";
 
-	String* mainString = new String("Real");
+	String mainString = String("Real");
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Length() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	size_t length = mainString->Length();
+	size_t length = mainString.Length();
 
 	if (length == 4)
 	{
@@ -28,7 +28,7 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String CharacterAt() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	char compare_char = mainString->CharacterAt(0);
+	char compare_char = mainString.CharacterAt(0);
 
 	if ((compare_char == 'R') == true)
 	{
@@ -42,7 +42,7 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String EqualTo() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if (mainString->EqualTo("Real") == true)
+	if (mainString.EqualTo("Real") == true)
 	{
 		std::cout << "[EqualTo() test] P" << std::endl;
 	}
@@ -54,9 +54,9 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Append() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString->Append("Real");
+	mainString.Append("Real");
 
-	if (mainString->EqualTo("RealReal"))
+	if (mainString.EqualTo("RealReal"))
 	{
 		std::cout << "[Append() test] P" << std::endl;
 	}
@@ -68,9 +68,9 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Prepend() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString->Prepend("Strong");
+	mainString.Prepend("Strong");
 
-	if (mainString->EqualTo("StrongRealReal"))
+	if (mainString.EqualTo("StrongRealReal"))
 	{
 		std::cout << "[Prepend() test] P" << std::endl;
 	}
@@ -82,7 +82,7 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String CStr() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if (std::cout << mainString->CStr() << std::endl)
+	if (std::cout << mainString.CStr() << std::endl)
 	{
 		std::cout << "[CStr() test] P" << std::endl;
 	}
@@ -94,13 +94,13 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ToLower() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString->ToLower();
+	mainString.ToLower();
 
 	bool isStringLower = true;
-	String& mainString_ref = *mainString;
+	String& mainString_ref = mainString;
 	
 	// Check if every character is lowercase
-	for (size_t i = 0; i < mainString->Length(); i++)
+	for (size_t i = 0; i < mainString.Length(); i++)
 	{
 		if (std::islower(mainString_ref[i]) == 0)
 		{
@@ -121,12 +121,12 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ToUpper() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	mainString->ToUpper();
+	mainString.ToUpper();
 
 	bool isStringUpper = true;
 
 	// Check if every character is uppercase
-	for (size_t i = 0; i < mainString->Length(); i++)
+	for (size_t i = 0; i < mainString.Length(); i++)
 	{
 		if (std::isupper(mainString_ref[i]) == 0)
 		{
@@ -147,62 +147,62 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Find() test 1
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	String* stringToSearch = new String("Bread");
-	String* stringToFind = new String("ead");
+	String stringToSearch = String("Bread");
+	String stringToFind = String("ead");
 
-	if (stringToSearch->Find(*stringToFind) == 2)
+	if (stringToSearch.Find(stringToFind) == 2)
 	{
 		std::cout << "[Find() test] P" << std::endl;
 	}
 	else
 	{
 		std::cout << "[Find() test] X" << std::endl;
-		std::cout << stringToSearch->Find(*stringToFind) << std::endl;
+		std::cout << stringToSearch.Find(stringToFind) << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Find() test 2
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	String* anotherStringToSearch = new String("BreadBread");
-	String* anotherStringToFind = new String("ead");
+	String anotherStringToSearch = String("BreadBread");
+	String anotherStringToFind = String("ead");
 
-	if (anotherStringToSearch->Find(5, *anotherStringToFind) == 7)
+	if (anotherStringToSearch.Find(5, anotherStringToFind) == 7)
 	{
 		std::cout << "[Find() test 2] P" << std::endl;
 	}
 	else
 	{
 		std::cout << "[Find() test 2] X" << std::endl;
-		std::cout << anotherStringToSearch->Find(5, *anotherStringToFind) << std::endl;
+		std::cout << anotherStringToSearch.Find(5, anotherStringToFind) << std::endl;
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String Replace() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	String* stringToReplace = new String("Bad Rad Sad");
+	String stringToReplace = String("Bad Rad Sad");
 
-	stringToReplace->Replace("ad", "aaad");
+	stringToReplace.Replace("ad", "aaad");
 
-	if (stringToReplace->EqualTo("Baaad Raaad Saaad") == true)
+	if (stringToReplace.EqualTo("Baaad Raaad Saaad") == true)
 	{
 		std::cout << "[Replace() test] P" << std::endl;
 	}
 	else
 	{
 		std::cout << "[Replace() test] X" << std::endl;
-		std::cout << "Actual Value   : " << stringToReplace->CStr() << std::endl;
+		std::cout << "Actual Value   : " << stringToReplace.CStr() << std::endl;
 		std::cout << "Reference value: Baaad Raaad Saaad\n";
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ReadFromConsole() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	String* originalString = new String(*mainString);
+	String originalString = String(mainString);
 
 	std::cout << "[Enter a string]: ";
-	mainString->ReadFromConsole();
+	mainString.ReadFromConsole();
 
-	if (mainString->EqualTo(*originalString) == false)
+	if (mainString.EqualTo(originalString) == false)
 	{
 		std::cout << "[ReadFromConsole() test] P" << std::endl;
 	}
@@ -214,7 +214,7 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String WriteToConsole() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	if (mainString->WriteToConsole())
+	if (mainString.WriteToConsole())
 	{
 		std::cout << "[WriteToConsole() test] P" << std::endl;
 	}
@@ -222,22 +222,6 @@ int main()
 	{
 		std::cout << "[WriteToConsole() test] X" << std::endl;
 	}
-
-	delete mainString;
-	delete stringToSearch;
-	delete stringToFind;
-	delete anotherStringToSearch;
-	delete anotherStringToFind;
-	delete originalString;
-	delete stringToReplace;
-
-	mainString = nullptr;
-	stringToSearch = nullptr;
-	stringToFind = nullptr;
-	anotherStringToSearch = nullptr;
-	anotherStringToFind = nullptr;
-	originalString = nullptr;
-	stringToReplace = nullptr;
 
 	return 0;
 }
