@@ -258,7 +258,7 @@ bool String::operator < (const String& rightString) const
 {
 	int compare_result = strcmp(stringBuffer, rightString.stringBuffer);
 
-	if (compare_result == 0 || compare_result < 0)
+	if (compare_result == 0 || compare_result > 0)
 		return false;
 	else
 		return true;
