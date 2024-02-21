@@ -32,7 +32,7 @@ String::String(const String& otherString)
 // Deconstructor
 String::~String()
 {
-	delete[] stringBuffer;
+	if (stringBuffer) delete[] stringBuffer;
 	stringBuffer = nullptr;
 }
 
