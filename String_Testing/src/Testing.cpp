@@ -5,7 +5,7 @@
 #include "StringUtil.h"
 
 /*
- *	String utility testing app
+ *	String utility testing app that logs its results to a file.
  */
 
 static void LogTest(std::ofstream& stream, bool success, const char* testName)
@@ -162,7 +162,7 @@ int main()
 		std::cout << "Enter a string: ";
 		mainString.ReadFromConsole();
 
-		if (mainString.EqualTo(originalString))
+		if (mainString.EqualTo(originalString) == false)
 			testsCompleted[11] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -178,14 +178,7 @@ int main()
 		String stringCompare_2 = String("String");
 
 		if (stringCompare_1 == stringCompare_2)
-		{
-			resultLogFile << "[Operator == test]\tPass" << std::endl;
 			testsCompleted[13] = true;
-		}
-		else
-		{
-			resultLogFile << "[Operator == test]\tFail" << std::endl;
-		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Operator [] test
@@ -193,14 +186,7 @@ int main()
 		char characterAtIndex = stringCompare_1[0];
 
 		if (characterAtIndex == 'S')
-		{
-			resultLogFile << "[Operator [] test]\tPass" << std::endl;
 			testsCompleted[14] = true;
-		}
-		else
-		{
-			resultLogFile << "[Operator [] test]\tFail" << std::endl;
-		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Operator = test
@@ -211,14 +197,7 @@ int main()
 		stringAssign_2 = stringAssign_1;
 
 		if (stringAssign_2 == stringAssign_1)
-		{
-			resultLogFile << "[Operator = test]\tPass" << std::endl;
 			testsCompleted[15] = true;
-		}
-		else
-		{
-			resultLogFile << "[Operator = test]\tFail" << std::endl;
-		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Operator < test
@@ -227,14 +206,7 @@ int main()
 		String stringLessThan  = String("Animal");
 
 		if ((stringToCompare < stringLessThan) == false)
-		{
-			resultLogFile << "[Operator < test]\tPass" << std::endl;
 			testsCompleted[16] = true;
-		}
-		else
-		{
-			resultLogFile << "[Operator < test]\tFail" << std::endl;
-		}
 		
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// Writing test results to file
@@ -267,10 +239,10 @@ int main()
 		LogTest(resultLogFile, testsCompleted[10], "Replace() test");
 		LogTest(resultLogFile, testsCompleted[11], "ReadFromConsole() test");
 		LogTest(resultLogFile, testsCompleted[12], "WriteToConsole() test");
-		LogTest(resultLogFile, testsCompleted[13], "");
-		LogTest(resultLogFile, testsCompleted[14], "");
-		LogTest(resultLogFile, testsCompleted[15], "");
-		LogTest(resultLogFile, testsCompleted[16], "");
+		LogTest(resultLogFile, testsCompleted[13], "Operator == test");
+		LogTest(resultLogFile, testsCompleted[14], "Operator [] test");
+		LogTest(resultLogFile, testsCompleted[15], "Operator = test");
+		LogTest(resultLogFile, testsCompleted[16], "Operator < test");
 
 		resultLogFile.close();
 	}
