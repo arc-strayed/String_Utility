@@ -7,6 +7,7 @@ int main()
     string_to_output->WriteToConsole();
 
     delete string_to_output;
+    string_to_output = nullptr;
 
     return 0;
 }
