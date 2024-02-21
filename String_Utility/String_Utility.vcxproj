@@ -137,8 +137,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\StringUtil.cpp" />
-    <ClCompile Include="tests\Testing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\StringUtil.h" />
