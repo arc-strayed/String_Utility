@@ -8,127 +8,95 @@
  *	String utility testing app
  */
 
+static void LogTest(std::ofstream& stream, bool success, const char* testName)
+{
+	if (success)
+	{
+		stream << testName << "\tPass" << std::endl;
+	}
+	else
+	{
+		stream << testName << "\tFail" << std::endl;
+	}
+}
+
 int main()
 {
 	std::ofstream resultLogFile("results.txt", std::ofstream::app);
 
 	if (resultLogFile.is_open())
 	{
-		// Get current time and append to file
-		auto currentTime = std::chrono::system_clock::now();
-		std::time_t currentTimeT = std::chrono::system_clock::to_time_t(currentTime);
-
-		char timeBuffer[26] = {};
-		ctime_s(timeBuffer, 26, &currentTimeT);
-
-		resultLogFile << "Time\t" << timeBuffer;
-
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// [Start of tests]
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		String* mainString = new String("Real");
 
-		int testCompleted = 0;
+		// Get current time
+		auto currentTime = std::chrono::system_clock::now();
+		std::time_t currentTimeT = std::chrono::system_clock::to_time_t(currentTime);
+
+		String mainString = String("Real");
+
 		const int MAX_TESTS = 17;
+
+		bool testsCompleted[MAX_TESTS] = {};
+		for (int i = 0; i < MAX_TESTS; i++)
+			testsCompleted[i] = false;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String Length() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		size_t length = mainString->Length();
+		size_t length = mainString.Length();
 
 		if (length == 4)
-		{
-			resultLogFile << "[Length() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[Length() test]\tPass" << std::endl;
-		}
+			testsCompleted[0] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String CharacterAt() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		char compare_char = mainString->CharacterAt(0);
+		char compare_char = mainString.CharacterAt(0);
 
 		if ((compare_char == 'R') == true)
-		{
-			resultLogFile << "[CharacterAt() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[CharacterAt() test]\tFail" << std::endl;
-		}
+			testsCompleted[1] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String EqualTo() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		if (mainString->EqualTo("Real") == true)
-		{
-			resultLogFile << "[EqualTo() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[EqualTo() test]\tFail" << std::endl;
-		}
+		if (mainString.EqualTo("Real"))
+			testsCompleted[2] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String Append() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		mainString->Append("Real");
+		mainString.Append("Real");
 
-		if (mainString->EqualTo("RealReal"))
-		{
-			resultLogFile << "[Append() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[Append() test]\tFail" << std::endl;
-		}
+		if (mainString.EqualTo("RealReal"))
+			testsCompleted[3] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String Prepend() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		mainString->Prepend("Strong");
+		mainString.Prepend("Strong");
 
-		if (mainString->EqualTo("StrongRealReal"))
-		{
-			resultLogFile << "[Prepend() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[Prepend() test]\tFail" << std::endl;
-		}
+		if (mainString.EqualTo("StrongRealReal"))
+			testsCompleted[4] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String CStr() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		if (std::cout << mainString->CStr() << std::endl)
-		{
-			resultLogFile << "[CStr() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[CStr() test]\tFail" << std::endl;
-		}
+		if (std::cout << mainString.CStr() << std::endl)
+			testsCompleted[5] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String ToLower() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		mainString->ToLower();
+		mainString.ToLower();
 
 		bool isStringLower = true;
-		String& mainString_ref = *mainString;
 
 		// Check if every character is lowercase
-		for (size_t i = 0; i < mainString->Length(); i++)
+		for (size_t i = 0; i < mainString.Length(); i++)
 		{
-			if (std::islower(mainString_ref[i]) == 0)
+			if (std::islower(mainString[i]) == 0)
 			{
 				isStringLower = false;
 				break;
@@ -136,26 +104,19 @@ int main()
 		}
 
 		if (isStringLower)
-		{
-			resultLogFile << "[ToLower() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[ToLower() test]\tFail" << std::endl;
-		}
+			testsCompleted[6] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String ToUpper() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		mainString->ToUpper();
+		mainString.ToUpper();
 
 		bool isStringUpper = true;
 
 		// Check if every character is uppercase
-		for (size_t i = 0; i < mainString->Length(); i++)
+		for (size_t i = 0; i < mainString.Length(); i++)
 		{
-			if (std::isupper(mainString_ref[i]) == 0)
+			if (std::isupper(mainString[i]) == 0)
 			{
 				isStringUpper = false;
 				break;
@@ -163,115 +124,153 @@ int main()
 		}
 
 		if (isStringUpper)
-		{
-			resultLogFile << "[ToUpper() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[ToUpper() test]\tFail" << std::endl;
-		}
+			testsCompleted[7] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String Find() test 1
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		String* stringToSearch = new String("Bread");
-		String* stringToFind = new String("ead");
+		String stringToSearch = String("Bread");
+		String stringToFind = String("ead");
 
-		if (stringToSearch->Find(*stringToFind) == 2)
-		{
-			resultLogFile << "[Find() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[Find() test]\tFail" << std::endl;
-		}
+		if (stringToSearch.Find(stringToFind) == 2)
+			testsCompleted[8] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String Find() test 2
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		String* anotherStringToSearch = new String("BreadBread");
-		String* anotherStringToFind = new String("ead");
+		String anotherStringToSearch = String("BreadBread");
+		String anotherStringToFind = String("ead");
 
-		if (anotherStringToSearch->Find(5, *anotherStringToFind) == 7)
-		{
-			resultLogFile << "[Find() test 2]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[Find() test 2]\tFail" << std::endl;
-		}
+		if (anotherStringToSearch.Find(5, anotherStringToFind) == 7)
+			testsCompleted[9] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String Replace() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		String* stringToReplace = new String("Bad Rad Sad");
+		String stringToReplace = String("Bad Rad Sad");
 
-		stringToReplace->Replace("ad", "aaad");
+		stringToReplace.Replace("ad", "aaad");
 
-		if (stringToReplace->EqualTo("Baaad Raaad Saaad") == true)
-		{
-			resultLogFile << "[Replace() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[Replace() test]\tFail" << std::endl;
-		}
+		if (stringToReplace.EqualTo("Baaad Raaad Saaad") == true)
+			testsCompleted[10] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String ReadFromConsole() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		String* originalString = new String(*mainString);
+		String originalString = String(mainString);
 
 		std::cout << "Enter a string: ";
-		mainString->ReadFromConsole();
+		mainString.ReadFromConsole();
 
-		if (mainString->EqualTo(*originalString) == false)
-		{
-			resultLogFile << "[ReadFromConsole() test]\tPass" << std::endl;
-			testCompleted++;
-		}
-		else
-		{
-			resultLogFile << "[ReadFromConsole() test]\tFail" << std::endl;
-		}
+		if (mainString.EqualTo(originalString))
+			testsCompleted[11] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		// String WriteToConsole() test
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		if (mainString->WriteToConsole())
+		if (mainString.WriteToConsole())
+			testsCompleted[12] = true;
+
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// Operator == test
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		String stringCompare_1 = String("String");
+		String stringCompare_2 = String("String");
+
+		if (stringCompare_1 == stringCompare_2)
 		{
-			resultLogFile << "[WriteToConsole() test]\tPass" << std::endl;
-			testCompleted++;
+			resultLogFile << "[Operator == test]\tPass" << std::endl;
+			testsCompleted[13] = true;
 		}
 		else
 		{
-			resultLogFile << "[WriteToConsole() test]\tFail" << std::endl;
+			resultLogFile << "[Operator == test]\tFail" << std::endl;
 		}
 
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// Operator [] test
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		char characterAtIndex = stringCompare_1[0];
+
+		if (characterAtIndex == 'S')
+		{
+			resultLogFile << "[Operator [] test]\tPass" << std::endl;
+			testsCompleted[14] = true;
+		}
+		else
+		{
+			resultLogFile << "[Operator [] test]\tFail" << std::endl;
+		}
+
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// Operator = test
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		String stringAssign_1 = String("Real");
+		String stringAssign_2 = String("Fake");
+
+		stringAssign_2 = stringAssign_1;
+
+		if (stringAssign_2 == stringAssign_1)
+		{
+			resultLogFile << "[Operator = test]\tPass" << std::endl;
+			testsCompleted[15] = true;
+		}
+		else
+		{
+			resultLogFile << "[Operator = test]\tFail" << std::endl;
+		}
+
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// Operator < test
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		String stringToCompare = String("Zebra");
+		String stringLessThan  = String("Animal");
+
+		if ((stringToCompare < stringLessThan) == false)
+		{
+			resultLogFile << "[Operator < test]\tPass" << std::endl;
+			testsCompleted[16] = true;
+		}
+		else
+		{
+			resultLogFile << "[Operator < test]\tFail" << std::endl;
+		}
 		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		// Writing test results to file
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		char timeBuffer[26] = {};
+		ctime_s(timeBuffer, 26, &currentTimeT);
+		resultLogFile << "Time\t" << timeBuffer;
+
 		// Write test completion rate to file
-		float completionRate = ((float)testCompleted / (float)MAX_TESTS) * 100.0f;
-		resultLogFile << "Completion rate\t" << completionRate << "%" << std::endl;
+		int totalTestsCompleted = 0;
+		for (int i = 0; i < MAX_TESTS; i++)
+		{
+			if (testsCompleted[i] == true)
+				totalTestsCompleted++;
+		}
 
-		delete mainString;
-		delete stringToSearch;
-		delete stringToFind;
-		delete anotherStringToSearch;
-		delete anotherStringToFind;
-		delete originalString;
-		delete stringToReplace;
+		float passRate = ((float)totalTestsCompleted / (float)MAX_TESTS) * 100.0f;
+		resultLogFile << "Success rate\t" << passRate << "%" << std::endl;
 
-		mainString = nullptr;
-		stringToSearch = nullptr;
-		stringToFind = nullptr;
-		anotherStringToSearch = nullptr;
-		anotherStringToFind = nullptr;
-		originalString = nullptr;
-		stringToReplace = nullptr;
+		LogTest(resultLogFile, testsCompleted[0], "Length() test");
+		LogTest(resultLogFile, testsCompleted[1], "CharacterAt() test");
+		LogTest(resultLogFile, testsCompleted[2], "EqualTo() test");
+		LogTest(resultLogFile, testsCompleted[3], "Append() test");
+		LogTest(resultLogFile, testsCompleted[4], "Prepend() test");
+		LogTest(resultLogFile, testsCompleted[5], "CStr() test");
+		LogTest(resultLogFile, testsCompleted[6], "ToLower() test");
+		LogTest(resultLogFile, testsCompleted[7], "ToUpper() test");
+		LogTest(resultLogFile, testsCompleted[8], "Find() test");
+		LogTest(resultLogFile, testsCompleted[9], "Find() test 2");
+		LogTest(resultLogFile, testsCompleted[10], "Replace() test");
+		LogTest(resultLogFile, testsCompleted[11], "ReadFromConsole() test");
+		LogTest(resultLogFile, testsCompleted[12], "WriteToConsole() test");
+		LogTest(resultLogFile, testsCompleted[13], "");
+		LogTest(resultLogFile, testsCompleted[14], "");
+		LogTest(resultLogFile, testsCompleted[15], "");
+		LogTest(resultLogFile, testsCompleted[16], "");
 
 		resultLogFile.close();
 	}
