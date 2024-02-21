@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # Custom
 build/
 build-int/
+String_Testing/results.txt
