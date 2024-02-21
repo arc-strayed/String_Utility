@@ -7,17 +7,17 @@
 class String
 {
 public:
-	String(const char* rawString);
-	String(const String& otherString);
-	~String();
+	String(const char* rawString);     // Raw character array constructor
+	String(const String& otherString); // Copy constructor
+	~String();                         // Deconstructor
 
-	// Returns the length of the array
+	// Returns the length of the string
 	size_t Length() const;
 
 	// Returns the character at *index*
 	char CharacterAt(int index) const;
 
-	// Compares another string to this string to see if they're similar
+	// Compares two strings to see if they're similar
 	bool EqualTo(const String& otherString) const;
 
 	// Adds another string to the end of this string
@@ -38,28 +38,28 @@ public:
 	// Returns the index of stringToFind
 	int Find(const String& stringToFind);
 
-	// Returns the index of stringToFind starting at startIndex
+	// Returns the index of stringToFind starting at *startIndex*
 	int Find(int startIndex, const String& stringToFind);
 
-	// Replaces every instance of stringToFind with replaceString
+	// Replaces every instance of *stringToFind* with *replaceString*
 	void Replace(const String& stringToFind, const String& replaceString);
 
-	// Read output from console
+	// Read input from console
 	void ReadFromConsole();
 
 	// Write from array to console
 	int WriteToConsole() const;
 
-	// Check if strings are the same
+	// Checks if two strings are the same
 	bool operator == (const String& rightString) const;
 
-	// Get character at index
+	// Get character at *index*
 	char operator [] (int index) const;
 
 	// Copy other string to this string
 	String& operator = (const String& rightString);
 
-	// Check if string is before rightString in the alphabet
+	// Check if string is before *rightString* in the alphabet
 	bool operator < (const String& rightString) const;
 
 private:
