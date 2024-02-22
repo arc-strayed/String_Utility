@@ -203,7 +203,7 @@ void String::ReadFromConsole()
 	if (stringBuffer != nullptr) delete[] stringBuffer;
 
 	char inputBuffer[512] = {};
-	std::cin >> inputBuffer;
+	std::cin.getline(inputBuffer, 512);
 
 	stringSize = strlen(inputBuffer) + 1;
 
