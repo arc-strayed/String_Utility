@@ -223,5 +223,65 @@ int main()
 		std::cout << "[WriteToConsole() test] X" << std::endl;
 	}
 
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String operator == test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String stringCompare_1 = String("Same");
+	String stringCompare_2 = String("Same");
+
+	if (stringCompare_1 == stringCompare_2)
+	{
+		std::cout << "[Operator == test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Operator == test] X" << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String operator [] test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	char charAtIndex = stringCompare_1[0];
+
+	if (charAtIndex == 'S')
+	{
+		std::cout << "[Operator [] test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Operator [] test] X" << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String operator = test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String stringToCompare = String("Real");
+	String stringToSwap = String("Fake");
+
+	stringToSwap = stringToCompare;
+
+	if (stringToCompare == stringToSwap)
+	{
+		std::cout << "[Operator = test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Operator = test] X" << std::endl;
+	}
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// String operator < test
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	String stringLessThan = String("Raal");
+
+	if (stringLessThan < stringToCompare)
+	{
+		std::cout << "[Operator < test] P" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Operator < test] X" << std::endl;
+	}
+
 	return 0;
 }
