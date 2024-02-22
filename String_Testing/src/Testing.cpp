@@ -159,10 +159,10 @@ int main()
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		String originalString = String(mainString);
 
-		std::cout << "Enter a string: ";
+		std::cout << "Enter \"Test Test\": ";
 		mainString.ReadFromConsole();
 
-		if (mainString.EqualTo(originalString) == false)
+		if (mainString.EqualTo("Test Test"))
 			testsCompleted[11] = true;
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
