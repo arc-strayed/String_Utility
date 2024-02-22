@@ -197,12 +197,10 @@ int main()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// String ReadFromConsole() test
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	String originalString = String(mainString);
-
-	std::cout << "[Enter a string]: ";
+	std::cout << "[Enter \"Test Test\"]: ";
 	mainString.ReadFromConsole();
 
-	if (mainString.EqualTo(originalString) == false)
+	if (mainString.EqualTo("Test Test"))
 	{
 		std::cout << "[ReadFromConsole() test] P" << std::endl;
 	}
